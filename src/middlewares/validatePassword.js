@@ -8,7 +8,7 @@ const validatePassword = (req, res, next) => {
   }
 
   if (senha_banco !== senha) {
-    return res.json({ mensagem: 'A senha do banco informada é inválida!' })
+    return res.status(401).json({ mensagem: 'A senha do banco informada é inválida!' })
   }
   
   next()
