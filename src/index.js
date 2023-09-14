@@ -1,9 +1,11 @@
 const express = require('express')
-const rotas = require('./roteador')
-
 const app = express()
+const router = require('./routes')
+const port = 3000
 
 app.use(express.json())
-app.use(rotas)
+app.use(router)
 
-app.listen(3000)
+app.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}`)
+})
