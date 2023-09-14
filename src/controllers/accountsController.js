@@ -1,6 +1,8 @@
 const database = require('../database')
+const accounts = database.contas
 
 const listAccounts = (req, res) => {
+  return res.status(200).json(accounts)
 }
 
 const createAccount = (req, res) => {
