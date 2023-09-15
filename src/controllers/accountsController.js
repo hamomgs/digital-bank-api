@@ -1,5 +1,5 @@
 const database = require('../database')
-const accounts = database.contas
+let accounts = database.contas
 let id = 3
 
 const listAccounts = (req, res) => {
@@ -40,7 +40,7 @@ const createAccount = (req, res) => {
   accounts.push(newAccount)
   id++
 
-  return res.status(201).json()
+  return res.status(201).send()
 }
 
 const updateAccountUser = (req, res) => {
@@ -84,6 +84,24 @@ const updateAccountUser = (req, res) => {
 
 const deleteAccount = (req, res) => {
   const { numeroConta } = req.params
+
+  const validAccount = accounts.find((account) => {
+    return account.numero === numeroConta
+  })
+
+  if (!validAccount) {
+    return res.status(404).json({ mensagem: 'O número da conta informado não é válido.' })
+  }
+
+  if (validAccount.saldo > 0) {
+    return res.status(400).json({ mensagem: 'A conta só pode ser removida se o saldo for zero!' })
+  }
+
+  accounts = accounts.filter((account) => {
+    return account.numero !== numeroConta
+  })
+
+  return res.status(204).send()
 }
 
 const getBalance = (req, res) => {
