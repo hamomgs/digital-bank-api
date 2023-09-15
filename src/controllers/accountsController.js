@@ -1,5 +1,5 @@
-const database = require('../database')
-let accounts = database.contas
+let database = require('../database')
+const accounts = database.contas
 let id = 3
 
 const listAccounts = (req, res) => {
@@ -97,9 +97,9 @@ const deleteAccount = (req, res) => {
     return res.status(400).json({ mensagem: 'A conta só pode ser removida se o saldo for zero!' })
   }
 
-  accounts = accounts.filter((account) => {
-    return account.numero !== numeroConta
-  })
+  const index = accounts.indexOf(validAccount)
+  
+  accounts.splice(index, 1)
 
   return res.status(204).send()
 }
