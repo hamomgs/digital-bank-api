@@ -44,8 +44,42 @@ const createAccount = (req, res) => {
 }
 
 const updateAccountUser = (req, res) => {
-  const { nome, cpf, data_nascimento, telefone, email, senha } = req.body
+  const requiredFields = ['nome', 'cpf', 'data_nascimento', 'telefone', 'email', 'senha']
+  
+  for (const field of requiredFields) {
+    if (!req.body[field] || !req.body[field].trim()) {
+      return res.status(400).json({ mensagem: `O campo ${field} deve ser infomado.` })
+    }
+  }
+  
   const { numeroConta } = req.params
+
+  const validAccount = accounts.find((account) => {
+    return account.numero === numeroConta
+  })
+
+  if (!validAccount) {
+    return res.status(404).json({ mensagem: 'O número da conta informado não é válido.' })
+  }
+
+  const { nome, cpf, data_nascimento, telefone, email, senha } = req.body
+  const index = accounts.indexOf(validAccount)
+
+  const filteredAccounts = accounts.filter((account) => {
+    return account !== accounts[index]
+  })
+
+  const existingAccountData = filteredAccounts.find((account) => {
+    return account.usuario.cpf === cpf || account.usuario.email === email
+  })
+
+  if (existingAccountData) {
+    return res.status(400).json({ mensagem: 'O CPF ou Email informado já existe cadastrado!' })
+  }
+
+  accounts[index].usuario = { nome, cpf, data_nascimento, telefone, email, senha }
+
+  return res.status(201).send()
 }
 
 const deleteAccount = (req, res) => {
