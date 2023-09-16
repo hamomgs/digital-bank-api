@@ -1,4 +1,4 @@
-let database = require('../database')
+const database = require('../database')
 const accounts = database.contas
 let id = 3
 
@@ -10,7 +10,9 @@ const createAccount = (req, res) => {
   const requiredFields = ['nome', 'cpf', 'data_nascimento', 'telefone', 'email', 'senha']
 
   for (const field of requiredFields) {
-    if (!req.body[field] || !req.body[field].trim()) {
+    const fieldToString = req.body[field].toString()
+
+    if (!fieldToString || !fieldToString.trim()) {
       return res.status(400).json({ mensagem: `O campo ${field} deve ser infomado.` })
     }
   }
@@ -47,7 +49,9 @@ const updateAccountUser = (req, res) => {
   const requiredFields = ['nome', 'cpf', 'data_nascimento', 'telefone', 'email', 'senha']
   
   for (const field of requiredFields) {
-    if (!req.body[field] || !req.body[field].trim()) {
+    const fieldToString = req.body[field].toString()
+
+    if (!fieldToString || !fieldToString.trim()) {
       return res.status(400).json({ mensagem: `O campo ${field} deve ser infomado.` })
     }
   }
@@ -105,7 +109,33 @@ const deleteAccount = (req, res) => {
 }
 
 const getBalance = (req, res) => {
-  const { numero_conta, senha } = req.params
+  const requiredFields = ['numero_conta', 'senha']
+  
+  for (const field of requiredFields) {
+    if (!req.query[field]) {
+      return res.status(400).json({ mensagem: `O número da conta e a senha são obrigatórios!` })
+    }
+  }
+
+  const { numero_conta, senha } = req.query
+
+  const validAccount = accounts.find((account) => {
+    return account.numero === numero_conta
+  })
+
+  if (!validAccount) {
+    return res.status(404).json({ mensagem: 'Conta bancária não encontada!' })
+  }
+
+  const accountPassword = validAccount.usuario.senha
+
+  if (senha !== accountPassword) {
+    return res.status(400).json({ mensagem: 'A senha informada está incorreta.' })
+  }
+
+  const balance = validAccount.saldo
+
+  return res.status(200).json({ saldo: balance })
 }
 
 const getStatement = (req, res) => {
