@@ -139,7 +139,54 @@ const getBalance = (req, res) => {
 }
 
 const getStatement = (req, res) => {
-  const { numero_conta, senha } = req.params
+  const requiredFields = ['numero_conta', 'senha']
+  
+  for (const field of requiredFields) {
+    if (!req.query[field]) {
+      return res.status(400).json({ mensagem: `O número da conta e a senha são obrigatórios!` })
+    }
+  }
+
+  const { numero_conta, senha } = req.query
+
+  const validAccount = accounts.find((account) => {
+    return account.numero === numero_conta
+  })
+
+  if (!validAccount) {
+    return res.status(404).json({ mensagem: 'Conta bancária não encontada!' })
+  }
+
+  const accountPassword = validAccount.usuario.senha
+
+  if (senha !== accountPassword) {
+    return res.status(400).json({ mensagem: 'A senha informada está incorreta.' })
+  }
+
+  const deposits = database.depositos.filter((deposit) => {
+    return deposit.numero_conta === numero_conta
+  })
+
+  const withdrawals = database.saques.filter((withdraw) => {
+    return withdraw.numero_conta === numero_conta
+  })
+
+  const transfersMade = database.transferencias.filter((transfer) => {
+    return transfer.numero_conta_origem === numero_conta
+  })
+
+  const transfersReceived = database.transferencias.filter((transfer) => {
+    return transfer.numero_conta_destino === numero_conta
+  })
+
+  const statement = {
+    depositos: deposits,
+    saques: withdrawals,
+    transferenciasEnviadas: transfersMade,
+    transferenciasRecebidas: transfersReceived
+  }
+
+  return res.status(200).json(statement)
 }
 
 module.exports = {
