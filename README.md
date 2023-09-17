@@ -88,6 +88,7 @@ digital-bank/
 │   ├── database.js
 │   └── index.js
 ├── .gitignore
+├── LICENCE
 ├── package-lock.json
 ├── package.json
 └── README.md
@@ -106,4 +107,4 @@ digital-bank/
 
 This project is under the license [MIT](https://github.com/hamomgs/digital-bank-api/blob/main/LICENCE).
 
-Coded with 🧡 by Hamom Silva 👋🏽 [Get in Touch!](https://www.linkedin.com/in/hamomgs/)
+Made with 🧡 by Hamom Silva 👋🏽 [Get in Touch!](https://www.linkedin.com/in/hamomgs/)
