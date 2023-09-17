@@ -12,7 +12,7 @@
     "javascript"
   ],
   "author": "Hamom Silva",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "nodemon": "^3.0.1"
   },
