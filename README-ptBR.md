@@ -51,7 +51,7 @@ $ npm run dev
 # A aplicação estará acessível na porta 3000 via http://localhost:3000
 ```
 
-<p>
+<p align="center">
   <a href="https://insomnia.rest/download" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
 </p>
 
