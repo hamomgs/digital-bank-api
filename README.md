@@ -1,3 +1,12 @@
+<div>
+  <b>Idioma:</b>
+  <kbd title="Trocar idioma">
+    <a href="https://github.com/hamomgs/digital-bank-api/blob/main/README-ptBR.md" title="Trocar idioma" target="_blank">
+      <img width="25em" alt="bandeira do brasil" src="https://i.postimg.cc/kXW8wM7p/download-38.png" />
+    </a>
+  </kbd>
+</div>
+
 # Digital Bank API
 <p>
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/hamomgs/digital-bank-api?color=%2304D361" />
@@ -42,7 +51,7 @@ $ npm run dev
 # The application will be accessible on port:3000 via http://localhost:3000.
 ```
 
-<p>
+<p align="center">
   <a href="https://insomnia.rest/download" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
 </p>
 
@@ -101,6 +110,7 @@ digital-bank/
 - [JavaScript](https://devdocs.io/javascript/)
 - [Node.js](https://nodejs.org/)
 - [Express.js](https://www.npmjs.com/package/express)
+- [Nodemon](https://www.npmjs.com/package/nodemon)
 - [date-fns](https://date-fns.org)
 
 ## 📝 License
